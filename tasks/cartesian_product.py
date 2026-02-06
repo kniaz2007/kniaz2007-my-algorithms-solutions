@@ -14,4 +14,9 @@ def cartesian_product(arr1: list[T1], arr2: list[T2]) -> list[tuple[T1, T2]]:
         >> cartesian_product([1, 2], [3, 4])
         [(1, 3), (1, 4), (2, 3), (2, 4)]
     """
-    raise NotImplementedError
+    ans=[]
+    for i in arr1:
+        for j in arr2:
+            ans.append((i,j))
+    return ans
+
