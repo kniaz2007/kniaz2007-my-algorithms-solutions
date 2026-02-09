@@ -14,4 +14,11 @@ def corresponding_pairs(arr1: list[T1], arr2: list[T2]) -> list[tuple[T1, T2]]:
         >> corresponding_pairs([1, 2], [3, 4])
         [(1, 3), (2, 4)]
     """
-    raise NotImplementedError
+    ans=[]
+    minlen=min(len(arr1), len(arr2))
+    for i in range(minlen):
+        ans.append((arr1[i],arr2[i]))
+    return ans
+
+
+

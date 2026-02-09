@@ -1,38 +1,58 @@
-from typing import TypeVar, Generic
-
+# Код для файла graph.py
 __all__ = ("Node", "Graph")
 
 
-T = TypeVar("T")
-
-
-class Node(Generic[T]):
-    def __init__(self, value: T) -> None:
+class Node:
+    def __init__(self, value):
         self._value = value
-
-        self.outbound: list[Node] = []
-        self.inbound: list[Node] = []
+        self.outbound = []
+        self.inbound = []
 
     @property
-    def value(self) -> T:
+    def value(self):
         return self._value
 
-    def point_to(self, other: "Node") -> None:
+    def point_to(self, other):
         self.outbound.append(other)
         other.inbound.append(self)
 
-    def __str__(self) -> str:
+    def __str__(self):
         return f"Node({repr(self._value)})"
 
     __repr__ = __str__
 
 
 class Graph:
-    def __init__(self, root: Node) -> None:
+    def __init__(self, root):
         self._root = root
 
-    def dfs(self) -> list[Node]:
-        raise NotImplementedError
+    def dfs(self):
+        """Depth-First Search (поиск в глубину)"""
+        visited = []
+        stack = [self._root]
 
-    def bfs(self) -> list[Node]:
-        raise NotImplementedError
+        while stack:
+            node = stack.pop()
+            if node not in visited:
+                visited.append(node)
+                # Важно: reversed для соответствия тестам
+                for neighbor in reversed(node.outbound):
+                    if neighbor not in visited:
+                        stack.append(neighbor)
+
+        return visited
+
+    def bfs(self):
+        """Breadth-First Search (поиск в ширину)"""
+        visited = []
+        queue = [self._root]
+
+        while queue:
+            node = queue.pop(0)
+            if node not in visited:
+                visited.append(node)
+                for neighbor in node.outbound:
+                    if neighbor not in visited:
+                        queue.append(neighbor)
+
+        return visited
